@@ -111,3 +111,12 @@ Run `npm run format` to format application source, configuration, and documentat
 `public/favicon.svg` is the compact white ac mark with a cyan dot. PNG/ICO fallbacks and the 180px Apple touch icon use the same source.
 
 `public/social-preview.jpg` is a 1200×630 capture of the landing page. Open Graph and large-image card metadata are included in the initial HTML so link crawlers can read them without running React. The absolute URLs and canonical URL target https://alanwychen.github.io/. Update them if moving to a custom domain. Refresh the capture when the landing design changes. Social platforms may cache previous previews; LinkedIn’s Post Inspector can request a refresh.
+
+## Automatic publication controls
+
+Automatic publication is enabled through the `COMPOSITE_AUTO_DEPLOY` Actions
+variable. Set it to `false` to pause publication while retaining build checks.
+The `COMPOSITE_DEPLOY_KEY` Actions secret holds a dedicated deploy key for the
+composite repository; keep it in GitHub Secrets only. After app validation passes,
+check the [composite deployment runs](https://github.com/AlanWYChen/AlanWYChen.github.io/actions)
+for the final Pages deployment status. Pull requests validate without publishing.
