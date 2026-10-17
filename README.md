@@ -20,16 +20,19 @@ npm run preview
 
 The complete static website is generated in `dist/`. No server, database, environment variables, or paid services are required. Fonts load from Google Fonts with local fallbacks.
 
-## Deploy to GitHub Pages (current host)
+## Production deployment
 
-The repository `AlanWYChen/AlanWYChen.github.io` publishes at https://alanwychen.github.io/.
+This app is maintained independently in `AlanWYChen/swe-personal-site` and is served at
+https://alanwychen.github.io/. Its default Vite base is `/`.
 
-In **Settings → Pages → Build and deployment**, keep **Source: GitHub Actions**.
-The workflow in `.github/workflows/build.yml` builds with `npm ci` and `npm run build`, uploads only `dist/`, and deploys on pushes to `main`. Pull requests run the build without publishing. You can also run the workflow manually from Actions.
+`AlanWYChen/AlanWYChen.github.io` includes this repository as the `apps/portfolio`
+Git submodule and owns GitHub Pages deployment. After this repository's workflow
+validates formatting and production builds, pushes to `main` automatically update this app's submodule
+commit in the deployment repository, triggering the combined Pages deployment.
+See that repository's README for deployment credentials and manual commands.
 
-Do not publish the source directory: its `index.html` references JSX that requires Vite compilation. This is a user site at the domain root, so Vite's default `/` base and the existing root-relative asset links are correct.
-
-Official guide: https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+The teaching app is maintained separately. Do not add shared navigation, imports,
+or a common React router between the apps.
 
 ## Deploy to Cloudflare Pages
 
