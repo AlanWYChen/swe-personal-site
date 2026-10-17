@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { linkedin, companies, stacks, techIcons } from './data/portfolio.js';
 import CompanyCard from './components/CompanyCard.jsx';
 
 export default function App() {
   const [activeCompany, setActiveCompany] = useState(null);
+  useLayoutEffect(() => {
+    // Section anchors only exist after React mounts; restore direct/refresh links then.
+    const target = document.getElementById(window.location.hash.slice(1));
+    target?.scrollIntoView({ behavior: 'instant' });
+  }, []);
   const companyColumns = companies
     .map((company) => (company.className === activeCompany ? '2fr' : '1fr'))
     .join(' ');

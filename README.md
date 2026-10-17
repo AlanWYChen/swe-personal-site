@@ -125,3 +125,28 @@ The app's `.github/workflows/publish.yml` calls the shared workflow at
 `AlanWYChen/AlanWYChen.github.io/.github/workflows/deploy-alanwychen.yml@main`,
 passing only its submodule path and deploy-key secret. Installation, formatting,
 compilation, and the automatic submodule update are maintained centrally there.
+
+## Browser smoke tests
+
+```sh
+npm ci
+npx playwright install chromium
+npm run smoke
+```
+
+`smoke` builds the production app, then runs its own Playwright suite. After a
+build, `npm run test:smoke` reruns checks without rebuilding. Playwright starts a
+strict-port production preview automatically (4181), and closes it afterward.
+It does not reuse your development server. Chromium runs desktop, mobile, and
+narrow viewport checks. Google Fonts is replaced with system-font fallbacks in
+tests, and outbound links are checked without visiting external services.
+
+The shared publishing workflow runs these checks before updating the composite
+repository. Failures retain a report in `playwright-report/`, plus traces and
+screenshots in `test-results/`; both directories are ignored by Git. Inspect the
+report with `npx playwright show-report`. CI uploads failure evidence for seven
+days. Browser tests do not replace manual accessibility or visual review.
+
+Coverage includes asset loading, navigation and fragment refresh, return-to-top,
+resume PDF validity, expected link destinations, keyboard focus and inert card
+links, desktop hover, mobile tap, responsive overflow, and reduced-motion behavior.
